@@ -17,7 +17,7 @@ public class TaskDTO {
     private String title;
     private String description;
     private Boolean completed;
-    private LocalDateTime dueDate;
+    // private LocalDateTime dueDate;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Long userId; // en lugar de exponer el objeto User completo

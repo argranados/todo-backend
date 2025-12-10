@@ -27,14 +27,14 @@ public class Task {
     @Column(nullable = false)
     private Boolean completed = false;
     
-    @Column(name = "due_date")
-    private LocalDateTime dueDate;
+    // @Column(name = "due_date")
+    // private LocalDateTime dueDate;
     
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
     
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    // @Column(name = "updated_at")
+    // private LocalDateTime updatedAt;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -43,11 +43,11 @@ public class Task {
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
+        // updatedAt = LocalDateTime.now();
     }
     
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
+    // @PreUpdate
+    // protected void onUpdate() {
+        // updatedAt = LocalDateTime.now();
+    // }
 }

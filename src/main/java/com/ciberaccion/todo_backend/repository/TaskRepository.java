@@ -18,10 +18,10 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     List<Task> findByCompleted(Boolean completed);
 
     // Buscar tareas con fecha de vencimiento antes de cierta fecha
-    List<Task> findByDueDateBefore(LocalDateTime date);
+    // List<Task> findByDueDateBefore(LocalDateTime date);
 
     // Buscar tareas con fecha de vencimiento después de cierta fecha
-    List<Task> findByDueDateAfter(LocalDateTime date);
+    // List<Task> findByDueDateAfter(LocalDateTime date);
 
 
 }
