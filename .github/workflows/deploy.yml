@@ -25,6 +25,8 @@ jobs:
 
       - name: Prepare SSH key
         run: |
+          echo "$HOMEPATH"
+          whoami
           echo "$EC2_HOST"
           echo "$EC2_USER"
           echo "$EC2_SSH_KEY"
