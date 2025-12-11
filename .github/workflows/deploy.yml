@@ -30,9 +30,10 @@ jobs:
           echo "$EC2_HOST"
           echo "$EC2_USER"
           echo "$EC2_SSH_KEY"
-          echo "${{ secrets.EC2_SSH_KEY }}" > key.pem
+          printf '%s\n' "${{ secrets.EC2_SSH_KEY }}" > key.pem chmod 600 key.pem
           chmod 600 key.pem
 
       - name: Test SSH connection to EC2
         run: |
-          ssh -o StrictHostKeyChecking=no -i key.pem ${{ secrets.EC2_HOST }} 'echo "Successfully connected to EC2!"'
+          ssh -o StrictHostKeyChecking=no -i key.pem "secrets.EC2USER@{{ secrets.EC2_HOST }}" 'echo "Successfully connected to EC2!"'
+          
