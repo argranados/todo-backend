@@ -1,0 +1,52 @@
+name: Deploy Spring Boot Docker to EC2
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'corretto'
+        java-version: '17'
+
+    - name: Build with Maven
+      run: mvn clean package -DskipTests
+
+    - name: Build Docker image
+      run: docker build -t todo-list-app .
+
+    - name: Save Docker image
+      run: docker save todo-list-app | gzip > todo-list-app.tar.gz
+
+    - name: Copy image to EC2
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_SSH_KEY }}
+        source: "todo-list-app.tar.gz"
+        target: "/home/ubuntu/"
+
+    - name: Load and run container on EC2
+      uses: appleboy/ssh-action@v0.1.7
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          docker load < todo-list-app.tar.gz
+          docker stop todo-list-app || true
+          docker rm todo-list-app || true
+          docker run -d --name todo-list-app -p 8080:8080 todo-list-app
+
+    - name: Cleanup
+      run: rm -f private_key
