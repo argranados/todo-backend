@@ -1,0 +1,39 @@
+name: Build and Test EC2 SSH Connection
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main   # Or your trunk/deployment branch
+
+jobs:
+  build-and-test-ssh:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Build with Maven
+        run: mvn clean package -DskipTests
+
+      - name: Prepare SSH key
+        run: |
+          echo "$HOMEPATH"
+          whoami
+          echo "$EC2_HOST"
+          echo "$EC2_USER"
+          echo "$EC2_SSH_KEY"
+          printf '%s\n' "${{ secrets.EC2_SSH_KEY }}" > key.pem chmod 600 key.pem
+          chmod 600 key.pem
+
+      - name: Test SSH connection to EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no -i key.pem "secrets.EC2_USER@{{ secrets.EC2_HOST }}" 'echo "Successfully connected to EC2!"'
+          
