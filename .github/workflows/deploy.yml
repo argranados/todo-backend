@@ -35,5 +35,5 @@ jobs:
 
       - name: Test SSH connection to EC2
         run: |
-          ssh -o StrictHostKeyChecking=no -i key.pem "secrets.EC2USER@{{ secrets.EC2_HOST }}" 'echo "Successfully connected to EC2!"'
+          ssh -o StrictHostKeyChecking=no -i key.pem "secrets.EC2_USER@{{ secrets.EC2_HOST }}" 'echo "Successfully connected to EC2!"'
           
