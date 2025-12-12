@@ -1,0 +1,30 @@
+### Obtener todas las tareas
+GET http://3.22.97.168:8080/api/tasks
+Accept: application/json
+
+### Obtener una tarea por ID
+GET http://3.22.97.168:8080/api/tasks/1
+Accept: application/json
+
+### Crear una nueva tarea
+POST http://3.22.97.168:8080/api/tasks
+Content-Type: application/json
+
+{
+  "title": "Comprar leche",
+  "description": "Ir al supermercado y comprar leche",
+  "completed": false
+}
+
+### Actualizar una tarea existente
+PUT http://3.22.97.168:8080/api/tasks/1
+Content-Type: application/json
+
+{
+  "title": "Comprar leche y pan",
+  "description": "Ir al supermercado y comprar leche y pan",
+  "completed": true
+}
+
+### Eliminar una tarea
+DELETE http://3.22.97.168:8080/api/tasks/2
