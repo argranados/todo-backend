@@ -12,22 +12,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v4
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-2   # Cambia a tu región
-
-    - name: Get EC2 Public IP
-      id: ec2ip
-      run: |
-        IP=$(aws ec2 describe-instances \
-          --instance-ids ${{ secrets.EC2_INSTANCE_ID }} \
-          --query "Reservations[0].Instances[0].PublicIpAddress" \
-          --output text)
-        echo "EC2_HOST=$IP" >> $GITHUB_ENV
-
     - name: Set up JDK
       uses: actions/setup-java@v4
       with:
