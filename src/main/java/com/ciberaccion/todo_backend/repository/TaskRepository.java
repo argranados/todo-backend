@@ -12,7 +12,7 @@ import com.ciberaccion.todo_backend.model.Task;
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
     // Buscar todas las tareas de un usuario específico
-    List<Task> findByUserId(Long userId);
+    // List<Task> findByUserId(Long userId);
 
     // Buscar tareas por estado (completadas o no)
     List<Task> findByCompleted(Boolean completed);

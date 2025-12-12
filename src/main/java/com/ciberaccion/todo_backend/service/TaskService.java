@@ -1,8 +1,11 @@
 package com.ciberaccion.todo_backend.service;
 
+import org.springframework.stereotype.Service;
+
 import com.ciberaccion.todo_backend.model.Task;
 import com.ciberaccion.todo_backend.repository.TaskRepository;
 
+@Service
 public class TaskService {
 
     TaskRepository taskRepository;
