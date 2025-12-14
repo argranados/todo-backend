@@ -7,9 +7,14 @@ import java.util.List;
 import com.ciberaccion.todo_backend.model.Task;
 import com.ciberaccion.todo_backend.service.TaskService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @RestController
 @RequestMapping("/api/tasks")
-public class TaskController {
+public class TaskController {    
+
+    private static final Logger logger = LoggerFactory.getLogger(TaskController.class);
 
     TaskService taskService;
 
@@ -20,8 +25,8 @@ public class TaskController {
     // Obtener todas las tareas
     @GetMapping
     public List<Task> getTasks() {
-        // TODO: Implement get tasks logic
-        System.out.println("Fetching all tasks");
+        logger.info("Se ejecutó el endpoint /api/tasks [GET]");
+        
         return (List<Task>) taskService.getAllTasks();
 
     }
@@ -29,7 +34,8 @@ public class TaskController {
     // Obtener una tarea por ID
     @GetMapping("/{id}")
     public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
-        System.out.println("Fetching task with id: " + id);
+        logger.info("Se ejecutó el endpoint /api/tasks/{} [GET]", id);
+
         try {
             Task task = taskService.getTaskById(id);
             return ResponseEntity.ok(task);
@@ -42,15 +48,17 @@ public class TaskController {
     // // Crear una nueva tarea
     @PostMapping
     public ResponseEntity<Task> createTask(@RequestBody Task task) {
-        System.out.println("Creating task: " + task.getTitle());
+        logger.info("Se ejecutó el endpoint /api/tasks [POST]");
 
         return ResponseEntity.ok(taskService.createTask(task));
+
     }
 
     // // Actualizar una tarea existente
     @PutMapping("/{id}")
     public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task updatedTask) {
-        System.out.println("Updating task with id: " + id);
+        logger.info("Se ejecutó el endpoint /api/tasks/{} [PUT]", id);
+
         try {
             updatedTask.setId(id);
             Task task = taskService.updateTask(updatedTask);
@@ -63,9 +71,8 @@ public class TaskController {
     //     // Eliminar una tarea
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
-        System.out.println("Deleting task with id: " + id);
+        logger.info("Se ejecutó el endpoint /api/tasks/{} [DELETE]", id);
         taskService.deleteTask(id);
-        
         return ResponseEntity.noContent().build();
     }
 }
