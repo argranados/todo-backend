@@ -5,6 +5,7 @@ on:
     branches: [ "main" ]
 
 jobs:
+  if: false # Esto deshabilita todo el flujo de trabajo
   build-and-deploy:
     runs-on: ubuntu-latest
 
